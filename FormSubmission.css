@@ -1,0 +1,64 @@
+﻿body {
+  font: 15px/1.5 Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: #f4f4f4
+}
+
+header {
+  background: #00c553;
+  color: #ffffff;
+  padding-top: 30px;
+  min-height: 70px;
+  border-bottom: #000000 3px solid;
+}
+
+header a {
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+header #branding {
+  float: center;
+}
+
+header #branding h1 {
+  margin: 0;
+  text-align: center;
+}
+
+header nav {
+  float: right;
+  margin-top: 10px
+}
+
+header .highlight, header .current a {
+  color: #000000;
+  font-weight: bold;
+}
+
+#navbar {
+  background-color: #ffffff;
+  padding-top: 5px;
+  text-align: left;
+  color: #ffffff;
+  border-bottom: #000000 1px solid;
+}
+#navbar li {
+  display: inline;
+  padding: 0 20px 0 20px;
+}
+
+#navbar li a{
+  color: #00c553;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+#navbar .current a {
+  color: #000000;
+  font-weight: bold;
+}
