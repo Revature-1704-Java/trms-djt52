@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width">
     <title>Tuition Reimbursement | Form</title>
     <meta name="author" content="Daniel Truax">
-    <link rel="stylesheet" href="FormSubmission.css">
-
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="FormSubmission.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
 <body>
     <header>
@@ -21,8 +23,8 @@
 		</div>
 	  </div>
     </header>
-
-	<section id="navbar">
+	
+	<section id="navi">
 		<div class="container">
 			<ul>
 				<li>
@@ -38,14 +40,55 @@
 		</div>
 	<section>
 
-	<section id="newsletter">
-      <div class="container">
-        <h1>Subscribe to our newsletter!</h1>
-        <form>
-          <input type="email" placeholder="E-mail">
-          <button type="submit" class="btn_1">Subscribe</button>
-        </form>
-      </div>
-    </section>
+	
+<div class="container">
+  
+  <h2>Vertical (basic) Form</h2>
+  <form>
+	<div class="form-group">
+      <label for="date">Date:</label>
+      <input type="date" class="form-control" id="date" placeholder="Event Date">
+    </div>
+    <div class="form-group">
+      <label for="time">Time:</label>
+      <input type="time" class="form-control" id="time" placeholder="Event Time">
+    </div>
+    <div class="form-group">
+      <label for="des">Description:</label>
+      <input type="description" class="form-control" id="des" placeholder="Event Description">
+    </div>
+	<div class="form-group">
+      <label for="loc">Location:</label>
+      <input type="location" class="form-control" id="loc" placeholder="Event Location">
+    </div>
+	<div class="form-group">
+      <label for="cost">Cost:</label>
+      <input type="cost" class="form-control" id="cost" placeholder="Event Cost">
+    </div>
+    
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Grading Format
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#">HTML</a></li>
+      <li><a href="#">CSS</a></li>
+      <li><a href="#">JavaScript</a></li>
+    </ul>
+  </div>
+
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Event Type
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#">HTML</a></li>
+      <li><a href="#">CSS</a></li>
+      <li><a href="#">JavaScript</a></li>
+    </ul>
+  </div>
+</div>
+
 </body>
 </html>
