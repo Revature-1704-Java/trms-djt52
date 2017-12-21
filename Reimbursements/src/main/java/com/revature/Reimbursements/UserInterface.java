@@ -17,52 +17,42 @@ public class UserInterface {
 		System.out.println("Ctrl + C to quit");
 	}
 	
-	public UserInterface() {
-		System.out.println("Welcome to the employee reimbursement program");
-		Scanner sc = new Scanner(System.in);
-		String username = "";
-		System.out.println("Please enter your username:");
-		username = sc.nextLine();
-		ReimbursementDAO dao = new ReimbursementDAO();
-		Employee emp = dao.getEmployee(username);
-		if(emp == null) {
-			System.out.println("Incorrect username");
-			UserInterface ui = new UserInterface();
-		}
-		else {
-			System.out.println("Please enter your password:");
-			String password = sc.nextLine();
-			if(password.equals(emp.getPassword())) {
-				main(dao,emp);
-			} else {
-				System.out.println("Incorrect password");
-				UserInterface ui = new UserInterface();
-			}
+	//Login method can add incorrect username function later
+	public static String login(String username) {
+		String att = ReimbursementDAO.getPassword(username);
+		if(att.equals(null)) {
+			return att;
+		} else {
+			return att;
 		}
 	}
+	
+	//Return Reimbursements, need to add return type after learning servlets
+	
+	public void getRequests(String username) {
+		List<Reimbursement> requests = ReimbursementDAO.getEmployeeRequests(username);
 		
-	public void main(ReimbursementDAO dao, Employee emp) {
-		Scanner sc = new Scanner(System.in);
-		String command = "";
-		boolean exit = false;
-		while(!exit) {
-			System.out.println("Would you like to check your requests, make a new request, or enter manager mode?");
-			command = sc.nextLine();
-			if(command.equals("check") || command.equals("Check") || command.equals("c")) {
-				check(emp,dao);
-			} else if(command.equals("request") || command.equals("Request") || command.equals("r")) {
-				request(emp,dao);
-			} else if(command.equals("Manager") || command.equals("manager") || command.equals("m")) {
-				manager(emp,dao);
-			} else if(command.equals("q") || command.equals("exit") || command.equals("Exit") ||
-				command.equals("Quit") || command.equals("quit")) {
-				exit = true;
-			} else {
-				System.out.println("Please insert a valid command.");
+	}
+	
+	// Form submission
+	public void newRequest() {
+		
+	}
+	
+	// View requests to be approved
+	public void managerView(String username) {
+		Employee e = ReimbursementDAO.getEmployee(username);
+		if(e.getDepartment().equals("BenCo")) {
+			
+		} else if(ReimbursementDAO.checkDepartmentHead(e.getId()).size() != 0) {
+			
+		} else {
+			List<Reimbursement> toBeApproved = ReimbursementDAO.getSubbordinateRequests(e.getId());
+			for(Reimbursement r : toBeApproved) {
 			}
 		}
-		sc.close();
 	}
+	/*
 	public void check(Employee e, ReimbursementDAO d) {
 		List<Reimbursement> requests = d.getEmployeeRequests(e.getId());
 		System.out.println(requests.size());
@@ -99,4 +89,5 @@ public class UserInterface {
 			}
 		}
 	}
+	*/
 }

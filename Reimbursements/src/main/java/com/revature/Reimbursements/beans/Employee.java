@@ -1,28 +1,34 @@
 package com.revature.Reimbursements.beans;
 
 public class Employee {
+	
 	private int id;
 	private String name;
-	private String description;
 	private String username;
 	private String password;
+	private String department;
 	private int managerId;
 	
-	public Employee() {
-	}
-	
+	public Employee(int id, String name, String username, String password,
+		String department, int managerId) {
+	super();
+	this.id = id;
+	this.name = name;
+	this.username = username;
+	this.password = password;
+	this.department = department;
+	this.managerId = managerId;
+}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
-		if(id >= 0)
 		this.id = id;
 	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
-		if(name.length() > 0)
 		this.name = name;
 	}
 	public String getUsername() {
@@ -37,30 +43,18 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 	public int getManagerId() {
 		return managerId;
 	}
 	public void setManagerId(int managerId) {
-		if(managerId > 0)
 		this.managerId = managerId;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public Employee(int id, String name, String description, String username,
-			String password, int managerId) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.username = username;
-		this.password = password;
-		this.managerId = managerId;
-	}
-
-	
 }
+	
+	
