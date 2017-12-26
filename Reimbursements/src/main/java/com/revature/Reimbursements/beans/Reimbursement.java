@@ -6,36 +6,36 @@ import java.sql.Time;
 public class Reimbursement {
 	
 	private int id;
-	private float amount;
-	private String description, location;
+	private float cost, ramount;
+	private String description, location, reason;
 	private int eid;
 	private Date date;
 	private Time time;
 	private int formatid, eventid;
-	private int sapproval, dhapproval, bcapproval;
-	private String status;
+	private String status, excreason, denial;
 	private float timemissed;
 	
 	
-	public Reimbursement(int id, float amount, String description,
+	public Reimbursement(int id, float cost, float ramount, String description, String reason,
 			String location, int eid, Date date, Time time, int formatid,
-			int eventid, int sapproval, int dhapproval, int bcapproval,
-			String status, float timemissed) {
+			int eventid, String status, float timemissed, String excreason,
+			String denial) {
 		super();
 		this.id = id;
-		this.amount = amount;
+		this.ramount = ramount;
+		this.cost = cost;
 		this.description = description;
+		this.reason = reason;
 		this.location = location;
 		this.eid = eid;
 		this.date = date;
 		this.time = time;
 		this.formatid = formatid;
 		this.eventid = eventid;
-		this.sapproval = sapproval;
-		this.dhapproval = dhapproval;
-		this.bcapproval = bcapproval;
 		this.status = status;
 		this.timemissed = timemissed;
+		this.excreason = excreason;
+		this.denial = denial;
 	}
 	public int getId() {
 		return id;
@@ -43,17 +43,29 @@ public class Reimbursement {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public float getAmount() {
-		return amount;
+	public float getRamount() {
+		return ramount;
 	}
-	public void setAmount(float amount) {
-		this.amount = amount;
+	public void setRamount(float amount) {
+		this.ramount = amount;
+	}
+	public float getCost() {
+		return cost;
+	}
+	public void setCost(float cost) {
+		this.cost = cost;
 	}
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 	public String getLocation() {
 		return location;
@@ -91,24 +103,6 @@ public class Reimbursement {
 	public void setEventid(int eventid) {
 		this.eventid = eventid;
 	}
-	public int getSapproval() {
-		return sapproval;
-	}
-	public void setSapproval(int sapproval) {
-		this.sapproval = sapproval;
-	}
-	public int getDhapproval() {
-		return dhapproval;
-	}
-	public void setDhapproval(int dhapproval) {
-		this.dhapproval = dhapproval;
-	}
-	public int getBcapproval() {
-		return bcapproval;
-	}
-	public void setBcapproval(int bcapproval) {
-		this.bcapproval = bcapproval;
-	}
 	public String getStatus() {
 		return status;
 	}
@@ -121,6 +115,19 @@ public class Reimbursement {
 	public void setTimemissed(float timemissed) {
 		this.timemissed = timemissed;
 	}
+	public String getExcreason() {
+		return excreason;
+	}
+	public void setExcreason(String excreason) {
+		this.excreason = excreason;
+	}
+	public String getDenial() {
+		return denial;
+	}
+	public void setDenial(String denial) {
+		this.denial = denial;
+	}
+	
 }
 	
 	

@@ -50,22 +50,22 @@ public class ReimbursementDAO {
 			
 			while (rs.next()) {
 				int id = rs.getInt("RID");
-				float amount = rs.getFloat("AMOUNT");
+				int cost = rs.getInt("FCOST");
+				float ramount = rs.getFloat("RAMOUNT");
 				String desc = rs.getString("RDESCRIPTION");
 				String loc = rs.getString("LOC");
+				String reas = rs.getString("REASON");
 				int emp = rs.getInt("EID");
 				Date date = rs.getDate("EDATE");
 				Time time = rs.getTime("ETIME");
 				int gfid = rs.getInt("FORMATID");
 				int evid = rs.getInt("EVENTID");
-				int sapproval = rs.getInt("SAPPROVAL");
-				int dhapproval = rs.getInt("DHAPPROVAL");
-				int bcapproval = rs.getInt("BCAPPROVAL");
 				String status = rs.getString("STATUS");
 				float timemissed = rs.getFloat("TIMEMISSED");
+				String excreason = rs.getString("EXCREASON");
+				String denial = rs.getString("DENIAL");
 				
-				r = new Reimbursement(id,amount,desc, loc, emp, date, time, gfid, evid, sapproval,
-						dhapproval, bcapproval, status, timemissed);
+				r = new Reimbursement(id,cost,ramount,desc, reas, loc, emp, date, time, gfid, evid, status, timemissed, excreason, denial);
 				requests.add(r);
 			}
 			rs.close();
@@ -104,33 +104,54 @@ public class ReimbursementDAO {
 		return e;
 	}
 	
-	public void newRequest(float amount, String description,
-							String location, int eid, Date date, Time time, int formatid,
-							int eventid, int sapproval, int dhapproval, int bcapproval,
-							String status, float timemissed) {
+	public void newRequest(Reimbursement r) {
 		CallableStatement cs = null;
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "{INSERT INTO REQUEST (EID, FDATE, FTIME, LOC, FDESCRIPTION, FCOST"
-					+ "FORMATID, EVENTID, SAPPROVAL, DHAPPROVAL, BCAPPROVAL, STATUS, TIMEMISSED)"
+			String sql = "{INSERT INTO REQUEST (EID, FDATE, FTIME, LOC, FDESCRIPTION, REASON, "
+					+ "FCOST, RAMOUNT, FORMATID, EVENTID, STATUS, TIMEMISSED, EXCREASON, DENIAL)"
 					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			cs = conn.prepareCall(sql);
-			cs.setInt(1, eid);
-			cs.setDate(2, date);
-			cs.setTime(3, time);
-			cs.setString(4, location);
-			cs.setString(5, description);
-			cs.setFloat(6, amount);
-			cs.setInt(7, formatid);
-			cs.setInt(8, eventid);
-			cs.setInt(9, sapproval);
-			cs.setInt(10, dhapproval);
-			cs.setInt(11, bcapproval);
-			cs.setString(12,status);
-			cs.setFloat(13, timemissed);
-			
+			cs.setInt(1, r.getId());
+			cs.setDate(2, r.getDate());
+			cs.setTime(3, r.getTime());
+			cs.setString(4, r.getLocation());
+			cs.setString(5, r.getDescription());
+			cs.setString(6, r.getReason());
+			cs.setFloat(7, r.getCost());
+			cs.setFloat(8, r.getRamount());
+			cs.setInt(9, r.getFormatid());
+			cs.setInt(10, r.getEventid());
+			cs.setString(11,r.getStatus());
+			cs.setFloat(12, r.getTimemissed());
+			cs.setString(13,r.getExcreason());
+			cs.setString(14,r.getDenial());
 			Boolean result = cs.execute();
 			if (!result)
 				System.out.println("Request Added");
+			else
+				System.out.println("Failed");
+			
+			cs.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public static void updateRequest(Reimbursement r) {
+		CallableStatement cs = null;
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "{UPDATE REQUEST SET RAMOUNT = ?, STATUS = ?,EXCREASON = ?, DENIAL = ?)"
+					+ "WHERE RID = ?";
+
+			cs = conn.prepareCall(sql);
+			cs.setFloat(1, r.getRamount());
+			cs.setString(2,r.getStatus());
+			cs.setString(3,r.getExcreason());
+			cs.setString(4,r.getDenial());
+			cs.setInt(5, r.getId());
+			Boolean result = cs.execute();
+			if (!result)
+				System.out.println("Request Updated");
 			else
 				System.out.println("Failed");
 			
@@ -163,6 +184,32 @@ public class ReimbursementDAO {
 		
 		return departments;
 	}
+	
+	// Returns all of the subordinate requests of a manager
+	//needs work
+	//
+	//
+	public static List<Reimbursement> getSubordinateRequests(int id) {
+		PreparedStatement ps = null;
+		List<Reimbursement> res = new ArrayList<>();
+		try(Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "SELECT * FROM EMPLOYEE,REIMBURSEMENT WHERE REPORTSTO = ? AND EMPLOYEE.EID = REQUEST.EID";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,id);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				String e = rs.getString("DNAME");
+				.add(e);
+			}
+			rs.close();
+			ps.close();
+		} catch (Exception ex) {
+			ex.getMessage();
+		}
+		
+		return res;
+		
 	}
 	
 	public List<Employee> getAllEmps() {

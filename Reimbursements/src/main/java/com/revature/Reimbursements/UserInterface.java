@@ -47,7 +47,7 @@ public class UserInterface {
 		} else if(ReimbursementDAO.checkDepartmentHead(e.getId()).size() != 0) {
 			
 		} else {
-			List<Reimbursement> toBeApproved = ReimbursementDAO.getSubbordinateRequests(e.getId());
+			List<Reimbursement> toBeApproved = ReimbursementDAO.getSubordinateRequests(e.getId());
 			for(Reimbursement r : toBeApproved) {
 			}
 		}
