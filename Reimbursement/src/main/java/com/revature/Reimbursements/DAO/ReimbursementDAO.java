@@ -17,13 +17,13 @@ import com.revature.Reimbursements.util.ConnectionUtil;
 public class ReimbursementDAO {
 	
 	//DAO function to return password for login in front end
-	public static String getPassword(String username) {
+	public static String getPassword(String email) {
 		PreparedStatement ps = null;
 		String pass = null;
 		try(Connection conn = ConnectionUtil.getConnection()) {
 			String sql = "SELECT EPASSWORD FROM EMPLOYEE WHERE EUSERNAME = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
+			ps.setString(1, email);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				pass = rs.getString("EPASSWORD");
@@ -200,7 +200,7 @@ public class ReimbursementDAO {
 			
 			while (rs.next()) {
 				String e = rs.getString("DNAME");
-				.add(e);
+			//	.add(e);
 			}
 			rs.close();
 			ps.close();

@@ -4,7 +4,7 @@ public class Employee {
 	
 	private int id;
 	private String name;
-	private String username;
+	private String email;
 	private String password;
 	private String department;
 	private int managerId;
@@ -14,7 +14,7 @@ public class Employee {
 	super();
 	this.id = id;
 	this.name = name;
-	this.username = username;
+	this.email = email;
 	this.password = password;
 	this.department = department;
 	this.managerId = managerId;
@@ -31,11 +31,11 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String username) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;
