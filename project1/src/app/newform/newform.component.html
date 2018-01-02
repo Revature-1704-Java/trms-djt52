@@ -1,5 +1,5 @@
 ﻿<div>
-<h2>Vertical (basic) Form</h2>
+<h2>New Reimbursement Request</h2>
   <form>
 	<div class="form-group">
       <label for="date">Date:</label>
@@ -13,6 +13,10 @@
       <label for="des">Description:</label>
       <input type="description" class="form-control" id="des" placeholder="Event Description">
     </div>
+    <div class="form-group">
+      <label for="reas">Reason for attending:</label>
+      <input type="text" class="form-control" id="res" placeholder="Reason">
+    </div>
 	<div class="form-group">
       <label for="loc">Location:</label>
       <input type="location" class="form-control" id="loc" placeholder="Event Location">
@@ -21,26 +25,27 @@
       <label for="cost">Cost:</label>
       <input type="cost" class="form-control" id="cost" placeholder="Event Cost">
     </div>
+    <div class="form-group">
+      <label for="timemissed">Work time to be missed:</label>
+      <input type="text" class="form-control" id="timemissed" placeholder="Time Missed">
+    </div>
+    <h6>Grade Format</h6>
+    <select class="selectpicker" id="GradeFormat">
+      <option>Graded</option>
+      <option>Pass/Fail</option>
+      <option>Completion</option>
+      <option>Participation</option>
+    </select>
+    <h6>Event Format</h6>
+    <select class="selectpicker" id="EventFormat">
+      <option>University Course</option>
+      <option>Seminar</option>
+      <option>Certification Preparation Class</option>
+      <option>Certification</option>
+      <option>Technical Training</option>
+      <option>Other</option>
+    </select>
 
-  <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Grading Format
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li><a href="#">HTML</a></li>
-      <li><a href="#">CSS</a></li>
-      <li><a href="#">JavaScript</a></li>
-    </ul>
-  </div>
-
-  <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Event Type
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li><a href="#">HTML</a></li>
-      <li><a href="#">CSS</a></li>
-      <li><a href="#">JavaScript</a></li>
-    </ul>
-  </div>
   <button type="submit" class="btn btn-default">Submit</button>
   </form>
 </div>

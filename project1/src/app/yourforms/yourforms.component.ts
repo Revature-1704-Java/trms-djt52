@@ -8,7 +8,7 @@
 export class YourformsComponent implements OnInit {
   
   ngOnInit() {
-    let i = 1:number;
+    let i = 1;
     let xml = new XMLHttpRequest();
         xml.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
@@ -20,7 +20,7 @@ export class YourformsComponent implements OnInit {
    }
 
    function processTable(xml) {
-      let i = 1:number;
+      let i = 1;
       let xmlDoc = this.responseXML;
       let table=`<tr><th>ID</th><th>Status</th><th>Description</th><th>Cost</th><th>Reimbursement Amount</th>
       <th>Location</th><th>Date</th><th>Time</th><th>Reason</th><th>Format</th><th>Event</th></tr>`;

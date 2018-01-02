@@ -81,19 +81,19 @@ public class ReimbursementDAO {
 		PreparedStatement ps = null;
 		Employee e = null;
 		try(Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT * FROM EMPLOYEE WHERE EUSERNAME = ?";
+			String sql = "SELECT * FROM EMPLOYEE WHERE EMAIL = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				int id = rs.getInt("EID");
 				String name = rs.getString("ENAME");
-				String position = rs.getString("EPOSITION");
-				String user = rs.getString("EUSERNAME");
+				String department = rs.getString("EDEPARTMENT");
+				String user = rs.getString("EMAIL");
 				String pass = rs.getString("EPASSWORD");
-				int manid = rs.getInt("MANAGERID");
+				int manid = rs.getInt("REPORTSTO");
 				
-				e = new Employee(id,name,position,user,pass,manid);
+				e = new Employee(id,name,user,pass,department,manid);
 			}
 			rs.close();
 			ps.close();

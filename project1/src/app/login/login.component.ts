@@ -16,7 +16,11 @@ export class LoginComponent implements OnInit {
       let xml = new XMLHttpRequest();
       xml.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            if(this.responseText == 'Incorrect Password' || this.responseText == 'Invalid Email') {
+              document.getElementById('loginform').insertAdjacentHTML( 'afterbegin', `<div id="error">${this.responseText}</div>` );
+              } else {
             console.log(this.responseText);
+            }
        }
     };
       xml.open('GET',`http://localhost:8080/Reimbursement/LoginServlet?email=${email}&pass=${pass}`,true);
