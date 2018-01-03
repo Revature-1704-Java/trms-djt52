@@ -11,8 +11,18 @@
     <servlet-class>com.revature.controllers.LoginServlet</servlet-class>
  </servlet>
   
+  <servlet>
+    <servlet-name>NewFormServlet</servlet-name>
+    <servlet-class>com.revature.controllers.NewFormServlet</servlet-class>
+ </servlet>
+ 
 <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+    <servlet-name>NewFormServlet</servlet-name>
+    <url-pattern>/NewFormServlet</url-pattern>
 </servlet-mapping>
 </web-app>

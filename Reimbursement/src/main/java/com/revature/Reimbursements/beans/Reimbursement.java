@@ -3,6 +3,8 @@ package com.revature.Reimbursements.beans;
 import java.sql.Date;
 import java.sql.Time;
 
+import com.revature.Reimbursements.DAO.ReimbursementDAO;
+
 public class Reimbursement {
 	
 	private int id;
@@ -11,14 +13,16 @@ public class Reimbursement {
 	private int eid;
 	private Date date;
 	private Time time;
-	private int formatid, eventid;
+	private String formatid, eventid;
 	private String status, excreason, denial;
 	private float timemissed;
 	
+	public Reimbursement() {
+	}
 	
 	public Reimbursement(int id, float cost, float ramount, String description, String reason,
-			String location, int eid, Date date, Time time, int formatid,
-			int eventid, String status, float timemissed, String excreason,
+			String location, int eid, Date date, Time time, String formatid,
+			String eventid, String status, float timemissed, String excreason,
 			String denial) {
 		super();
 		this.id = id;
@@ -36,6 +40,27 @@ public class Reimbursement {
 		this.timemissed = timemissed;
 		this.excreason = excreason;
 		this.denial = denial;
+	}
+	
+	public Reimbursement(int eid, String date, Time time, String description, String reason,
+			String location, float cost, float timemissed, String gradeformat,
+			String eventformat) {
+		//super();
+		
+		//this.cost = cost;
+		this.description = description;
+		//this.reason = reason;
+		//this.location = location;
+		//this.eid = eid;
+		//this.date = date;
+		//this.time = time;
+		/*
+		gradeFormat gf = ReimbursementDAO.getFormat(gradeformat);
+		eventFormat ef = ReimbursementDAO.getEvent(eventformat);
+		*/
+		
+		//this.timemissed = timemissed;
+		
 	}
 	public int getId() {
 		return id;
@@ -88,19 +113,19 @@ public class Reimbursement {
 	public Time getTime() {
 		return time;
 	}
-	public void setTime(Time time) {
-		this.time = time;
+	public void setTime(String time) {
+		//this.time = java.sql.Time.valueOf(time);
 	}
-	public int getFormatid() {
+	public String getFormatid() {
 		return formatid;
 	}
-	public void setFormatid(int formatid) {
+	public void setFormatid(String formatid) {
 		this.formatid = formatid;
 	}
-	public int getEventid() {
+	public String getEventid() {
 		return eventid;
 	}
-	public void setEventid(int eventid) {
+	public void setEventid(String eventid) {
 		this.eventid = eventid;
 	}
 	public String getStatus() {

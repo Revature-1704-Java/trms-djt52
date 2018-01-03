@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
       xml.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if(this.responseText == 'Incorrect Password' || this.responseText == 'Invalid Email') {
-              document.getElementById('loginform').insertAdjacentHTML( 'afterbegin', `<div id="error">${this.responseText}</div>` );
+              document.getElementById('message').innerHTML = this.responseText;
               } else {
             console.log(this.responseText);
             }
