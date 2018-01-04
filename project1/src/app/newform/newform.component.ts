@@ -9,7 +9,7 @@ export class NewformComponent implements OnInit {
 
   public sendRequest() {
       let request = {"eid":1,"date":document.getElementById("main").elements[0].value,
-      "time":document.getElementById("main").elements[1].value,
+      //"time":document.getElementById("main").elements[1].value,
       "description":document.getElementById("main").elements[2].value,
       "reason":document.getElementById("main").elements[3].value,
       "location":document.getElementById("main").elements[4].value,

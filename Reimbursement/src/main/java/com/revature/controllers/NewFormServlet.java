@@ -36,6 +36,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		ObjectMapper mapper = new ObjectMapper();
 		Reimbursement rem = mapper.readValue(json, Reimbursement.class);
 		if(rem != null) {
+			rem.initialize();
 			response.getWriter().append(rem.getReason());
 		} else {
 			response.getWriter().append("Other problem");

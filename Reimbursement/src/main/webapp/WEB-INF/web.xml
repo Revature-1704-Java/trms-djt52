@@ -16,6 +16,21 @@
     <servlet-class>com.revature.controllers.NewFormServlet</servlet-class>
  </servlet>
  
+ <servlet>
+    <servlet-name>YourServlet</servlet-name>
+    <servlet-class>com.revature.controllers.YourServlet</servlet-class>
+ </servlet>
+ 
+  <servlet>
+    <servlet-name>ManServlet</servlet-name>
+    <servlet-class>com.revature.controllers.ManServlet</servlet-class>
+ </servlet>
+ 
+ <servlet>
+    <servlet-name>AcceptDenyServlet</servlet-name>
+    <servlet-class>com.revature.controllers.AcceptDenyServlet</servlet-class>
+ </servlet>
+ 
 <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
@@ -24,5 +39,20 @@
 <servlet-mapping>
     <servlet-name>NewFormServlet</servlet-name>
     <url-pattern>/NewFormServlet</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+    <servlet-name>YourServlet</servlet-name>
+    <url-pattern>/YourServlet</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+    <servlet-name>ManServlet</servlet-name>
+    <url-pattern>/ManServlet</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+    <servlet-name>AcceptDenyServlet</servlet-name>
+    <url-pattern>/AcceptDenyServlet</url-pattern>
 </servlet-mapping>
 </web-app>

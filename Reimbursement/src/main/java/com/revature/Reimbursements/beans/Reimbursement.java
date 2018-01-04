@@ -13,7 +13,7 @@ public class Reimbursement {
 	private int eid;
 	private Date date;
 	private Time time;
-	private String formatid, eventid;
+	private int formatid, eventid;
 	private String status, excreason, denial;
 	private float timemissed;
 	
@@ -21,8 +21,8 @@ public class Reimbursement {
 	}
 	
 	public Reimbursement(int id, float cost, float ramount, String description, String reason,
-			String location, int eid, Date date, Time time, String formatid,
-			String eventid, String status, float timemissed, String excreason,
+			String location, int eid, Date date,/* Time time, */int formatid,
+			int eventid, String status, float timemissed, String excreason,
 			String denial) {
 		super();
 		this.id = id;
@@ -33,7 +33,7 @@ public class Reimbursement {
 		this.location = location;
 		this.eid = eid;
 		this.date = date;
-		this.time = time;
+		//this.time = time;
 		this.formatid = formatid;
 		this.eventid = eventid;
 		this.status = status;
@@ -42,9 +42,9 @@ public class Reimbursement {
 		this.denial = denial;
 	}
 	
-	public Reimbursement(int eid, String date, Time time, String description, String reason,
-			String location, float cost, float timemissed, String gradeformat,
-			String eventformat) {
+	public Reimbursement(int eid, String date, /*Time time,*/ String description, String reason,
+			String location, float cost, float timemissed, int gradeformat,
+			int eventformat) {
 		//super();
 		
 		//this.cost = cost;
@@ -62,6 +62,29 @@ public class Reimbursement {
 		//this.timemissed = timemissed;
 		
 	}
+	public void initialize() {
+		
+		int eventPercent = ReimbursementDAO.getEvent(eventid);
+		float fullAmount = eventPercent * cost;
+		float amountAvailable = 1000 - ReimbursementDAO.getEmpAmount(eid);
+		if(amountAvailable > 0) {
+			if(amountAvailable > fullAmount) {
+				ramount = fullAmount;
+			} else {
+				ramount = amountAvailable;
+			}
+			ReimbursementDAO.setEmpAmount(eid,amountAvailable - ramount);
+		} else ramount = 0;
+		this.status = "Needs Supervisor, Head, and Benco Approval";
+		if((Float)timemissed == null){
+			timemissed = 0;
+		}
+		excreason = "";
+		denial = "";
+		ReimbursementDAO.newRequest(this);
+		
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -116,17 +139,17 @@ public class Reimbursement {
 	public void setTime(String time) {
 		//this.time = java.sql.Time.valueOf(time);
 	}
-	public String getFormatid() {
+	public int getFormatid() {
 		return formatid;
 	}
 	public void setFormatid(String formatid) {
-		this.formatid = formatid;
+		this.formatid = ReimbursementDAO.getFormatId(formatid);
 	}
-	public String getEventid() {
+	public int getEventid() {
 		return eventid;
 	}
 	public void setEventid(String eventid) {
-		this.eventid = eventid;
+		this.eventid = ReimbursementDAO.getEventId(eventid);
 	}
 	public String getStatus() {
 		return status;
