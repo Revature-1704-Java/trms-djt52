@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -6,20 +7,23 @@
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  
+  
+  constructor(/*private router: Router*/) {
+  }
 
   public attemptLogin() {
   
       let email = document.getElementById("loginform").elements[0].value;
       let pass = document.getElementById("loginform").elements[1].value;
-      console.log(email);
-      console.log(pass);
       let xml = new XMLHttpRequest();
       xml.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if(this.responseText == 'Incorrect Password' || this.responseText == 'Invalid Email') {
               document.getElementById('message').innerHTML = this.responseText;
               } else {
-            console.log(this.responseText);
+            sessionStorage.employeeId = this.responseText;
+           // this.router.navigate(['/NewForm']);
             }
        }
     };

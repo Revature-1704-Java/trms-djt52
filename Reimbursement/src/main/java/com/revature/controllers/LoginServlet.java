@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet{
 		Employee e = ReimbursementDAO.getEmployee(email);
 		if(e != null) {
 			if(password.equals(e.getPassword())) {
-				response.getWriter().append(e.getName());
+				response.getWriter().append(Integer.toString(e.getId()));
 			} else {
 				response.getWriter().append("Incorrect Password");
 			}

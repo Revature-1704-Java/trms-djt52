@@ -1,28 +1,13 @@
 ﻿<div class="container">
-  <table id="table2" class="table table-dark table-hover">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
+  <div class="form-group">
+  <label for="app">To Approve:</label>
+  <input type="text" class="form-control" id="toApprove">
+  </div>
+  <div class="form-group">
+  <label for="deny">To Deny:</label>
+  <input type="text" class="form-control" id="toDeny">
+  </div>
+  <button type="button" (click)="sendApprove()" class="btn btn-primary">Primary</button>
+  <table id="table2" class="table table-dark table-hover table-sm">
   </table>
 </div>

@@ -21,7 +21,24 @@ export class ManformsComponent implements OnInit {
         xml.send();
       
      }
+     
+    public sendApprove() {
+      let apps = document.getElementById("toApprove").value
+      let deny = document.getElementById("toDeny").value
+      let xml = new XMLHttpRequest();
+        xml.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+             // this.router.navigate(['/NewForm']);
+          }
+        };
+        xml.open('GET',`http://localhost:8080/Reimbursement/AcceptDenyServlet?eid=${sessionStorage.employeeId}&apps=${apps}&deny=${deny}`,true);
+        xml.send();
+     }
 
+     public applyRequest(rid:Number,request:String) {
+         console.log(rid);
+         console.log(request);
+     }
    function processTable(xml) {
       let i = 1;
       let json = JSON.parse(xml.responseText);
@@ -50,7 +67,7 @@ export class ManformsComponent implements OnInit {
         json[i].formatid +
         "</td><td>" +
         json[i].eventid +
-        "</td></tr>";
+        "</td><tr>"
          }
       document.getElementById("table2").innerHTML = table;
       }

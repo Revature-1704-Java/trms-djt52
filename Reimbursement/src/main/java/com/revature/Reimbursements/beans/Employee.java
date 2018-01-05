@@ -6,11 +6,11 @@ public class Employee {
 	private String name;
 	private String email;
 	private String password;
-	private String department;
+	private int department;
 	private int managerId;
 	
 	public Employee(int id, String name, String username, String password,
-		String department, int managerId) {
+		int department, int managerId) {
 	super();
 	this.id = id;
 	this.name = name;
@@ -43,10 +43,10 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getDepartment() {
+	public int getDepartment() {
 		return department;
 	}
-	public void setDepartment(String department) {
+	public void setDepartment(int department) {
 		this.department = department;
 	}
 	public int getManagerId() {

@@ -16,7 +16,7 @@ export class YourformsComponent implements OnInit {
               processTable(this);
          }
       };
-      xml.open('GET',`http://localhost:8080/Reimbursement/YourServlet?eid=${i}`,true);
+      xml.open('GET',`http://localhost:8080/Reimbursement/YourServlet?eid=${sessionStorage.employeeId}`,true);
       xml.send();
       
    }

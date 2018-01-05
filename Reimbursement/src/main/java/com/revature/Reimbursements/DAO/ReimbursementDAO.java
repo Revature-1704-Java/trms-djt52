@@ -16,28 +16,6 @@ import com.revature.Reimbursements.util.ConnectionUtil;
 
 public class ReimbursementDAO {
 	
-	//DAO function to return password for login in front end
-	/*
-	public static String getPassword(String email) {
-		PreparedStatement ps = null;
-		String pass = null;
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT EPASSWORD FROM EMPLOYEE WHERE EUSERNAME = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, email);
-			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
-				pass = rs.getString("EPASSWORD");
-			}
-			rs.close();
-			ps.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println("Exception");
-		}
-		return pass;
-	}
-	*/
 	public static List<Reimbursement> getEmployeeRequests(int eid) {
 		
 		PreparedStatement ps = null;
@@ -78,18 +56,57 @@ public class ReimbursementDAO {
 		return requests;
 	}
 	
-	public static Employee getEmployee(String username) {
+public static Reimbursement getRequest(int rid) {
+		
+		PreparedStatement ps = null;
+		Reimbursement r = null;
+		Reimbursement request = new Reimbursement();
+		try(Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "SELECT * FROM REQUEST WHERE RID = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, rid);
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				int id = rs.getInt("RID");
+				float cost = rs.getFloat("FCOST");
+				float ramount = rs.getFloat("RAMOUNT");
+				String desc = rs.getString("FDESCRIPTION");
+				String loc = rs.getString("LOC");
+				String reas = rs.getString("REASON");
+				int emp = rs.getInt("EID");
+				Date date = rs.getDate("FDATE");
+				//Time time = rs.getTime("ETIME");
+				int gfid = rs.getInt("FORMATID");
+				int evid = rs.getInt("EVENTID");
+				String status = rs.getString("STATUS");
+				float timemissed = rs.getFloat("TIMEMISSED");
+				String excreason = rs.getString("EXCREASON");
+				String denial = rs.getString("DENIAL");
+				
+				request = new Reimbursement(id,cost,ramount,desc, reas, loc, emp, date, /*time,*/ gfid, evid, status, timemissed, excreason, denial);
+			}
+			rs.close();
+			ps.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return request;
+	}
+
+	public static Employee getEmployee(String email) {
 		PreparedStatement ps = null;
 		Employee e = null;
 		try(Connection conn = ConnectionUtil.getConnection()) {
 			String sql = "SELECT * FROM EMPLOYEE WHERE EMAIL = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
+			ps.setString(1, email);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				int id = rs.getInt("EID");
 				String name = rs.getString("ENAME");
-				String department = rs.getString("EDEPARTMENT");
+				int department = rs.getInt("EDEPARTMENT");
 				String user = rs.getString("EMAIL");
 				String pass = rs.getString("EPASSWORD");
 				int manid = rs.getInt("REPORTSTO");
@@ -104,19 +121,19 @@ public class ReimbursementDAO {
 		}
 		return e;
 	}
-	//Needs work
-	public static Reimbursement getRequest(int rid) {
+	
+	public static Employee getEmployeeById(int eid) {
 		PreparedStatement ps = null;
 		Employee e = null;
 		try(Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT * FROM REQUEST WHERE RID = ?";
+			String sql = "SELECT * FROM EMPLOYEE WHERE EID = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, rid);
+			ps.setInt(1, eid);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				int id = rs.getInt("EID");
 				String name = rs.getString("ENAME");
-				String department = rs.getString("EDEPARTMENT");
+				int department = rs.getInt("EDEPARTMENT");
 				String user = rs.getString("EMAIL");
 				String pass = rs.getString("EPASSWORD");
 				int manid = rs.getInt("REPORTSTO");
@@ -130,6 +147,22 @@ public class ReimbursementDAO {
 			System.out.println("Exception");
 		}
 		return e;
+	}
+	
+	//Needs work
+	public static void updateStatus(Reimbursement r) {
+		PreparedStatement ps = null;
+		Employee e = null;
+		try(Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "UPDATE REQUEST SET STATUS = ? WHERE RID = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, r.getStatus());
+			ps.setInt(2, r.getId());
+			ps.execute();
+			ps.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public static void newRequest(Reimbursement r) {
@@ -285,18 +318,18 @@ public class ReimbursementDAO {
 	}
 	
 	// Checks if the given employee is a department head
-	public static ArrayList<String> checkDepartmentHead(int eid) {
+	public static ArrayList<Integer> checkDepartmentHead(int eid) {
 		PreparedStatement ps = null;
-		ArrayList<String> departments = new ArrayList<String>();
+		ArrayList<Integer> departments = new ArrayList<Integer>();
 		
 		try(Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT DNAME FROM DEPARTMENT WHERE HEAD = ?";
+			String sql = "SELECT DEPARTMENTID FROM DEPARTMENT WHERE HEAD = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1,eid);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				String e = rs.getString("DNAME");
+				int e = rs.getInt("DEPARTMENTID");
 				departments.add(e);
 			}
 			rs.close();
@@ -350,33 +383,80 @@ public class ReimbursementDAO {
 		
 	}
 	
-	public List<Employee> getAllEmps() {
+	
+	
+	public static List<Reimbursement> getDepartmentEmployeeRequests(int i) {
 		PreparedStatement ps = null;
-		Employee e = null;
-		List<Employee> emps = new ArrayList<>();
-		
+		List<Reimbursement> res = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT * FROM EMPLOYEE";
+			String sql = "SELECT * FROM EMPLOYEE, REQUEST WHERE EDEPARTMENT = ? AND EMPLOYEE.EID = REQUEST.EID";
 			ps = conn.prepareStatement(sql);
+			ps.setInt(1,i);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				int id = rs.getInt("EID");
-				String name = rs.getString("ENAME");
-				String position = rs.getString("EPOSITION");
-				String user = rs.getString("EUSERNAME");
-				String pass = rs.getString("EPASSWORD");
-				int manid = rs.getInt("MANAGERID");
-				e = new Employee(id,name,position,user,pass,manid);
-				emps.add(e);
+				int rid = rs.getInt("RID");
+				float cost = rs.getFloat("FCOST");
+				float ramount = rs.getFloat("RAMOUNT");
+				String desc = rs.getString("FDESCRIPTION");
+				String loc = rs.getString("LOC");
+				String reas = rs.getString("REASON");
+				int emp = rs.getInt("EID");
+				Date date = rs.getDate("FDATE");
+				//Time time = rs.getTime("ETIME");
+				int gfid = rs.getInt("FORMATID");
+				int evid = rs.getInt("EVENTID");
+				String status = rs.getString("STATUS");
+				float timemissed = rs.getFloat("TIMEMISSED");
+				String excreason = rs.getString("EXCREASON");
+				String denial = rs.getString("DENIAL");
+				
+				res.add(new Reimbursement(rid,cost,ramount,desc, reas, loc, emp, date, /*time,*/ gfid, evid, status, timemissed, excreason, denial));
 			}
 			rs.close();
 			ps.close();
 		} catch (Exception ex) {
 			ex.getMessage();
 		}
+		return res;
 		
-		return emps;
 	}
+	
+	public static List<Reimbursement> getAllRequests() {
+		PreparedStatement ps = null;
+		List<Reimbursement> res = new ArrayList<>();
+		try(Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "SELECT * FROM REQUEST";
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				int rid = rs.getInt("RID");
+				float cost = rs.getFloat("FCOST");
+				float ramount = rs.getFloat("RAMOUNT");
+				String desc = rs.getString("FDESCRIPTION");
+				String loc = rs.getString("LOC");
+				String reas = rs.getString("REASON");
+				int emp = rs.getInt("EID");
+				Date date = rs.getDate("FDATE");
+				//Time time = rs.getTime("ETIME");
+				int gfid = rs.getInt("FORMATID");
+				int evid = rs.getInt("EVENTID");
+				String status = rs.getString("STATUS");
+				float timemissed = rs.getFloat("TIMEMISSED");
+				String excreason = rs.getString("EXCREASON");
+				String denial = rs.getString("DENIAL");
+				
+				res.add(new Reimbursement(rid,cost,ramount,desc, reas, loc, emp, date, /*time,*/ gfid, evid, status, timemissed, excreason, denial));
+			}
+			rs.close();
+			ps.close();
+		} catch (Exception ex) {
+			ex.getMessage();
+		}
+		return res;
+		
+	}
+	
 	
 }

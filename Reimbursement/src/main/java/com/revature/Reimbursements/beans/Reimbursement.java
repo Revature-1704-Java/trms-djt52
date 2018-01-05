@@ -2,6 +2,7 @@ package com.revature.Reimbursements.beans;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 
 import com.revature.Reimbursements.DAO.ReimbursementDAO;
 
@@ -65,7 +66,7 @@ public class Reimbursement {
 	public void initialize() {
 		
 		int eventPercent = ReimbursementDAO.getEvent(eventid);
-		float fullAmount = eventPercent * cost;
+		float fullAmount = ((float)eventPercent / 100) * cost;
 		float amountAvailable = 1000 - ReimbursementDAO.getEmpAmount(eid);
 		if(amountAvailable > 0) {
 			if(amountAvailable > fullAmount) {
@@ -84,7 +85,42 @@ public class Reimbursement {
 		ReimbursementDAO.newRequest(this);
 		
 	}
-	
+	public void updateStatus(int manid,boolean b) {
+		Employee manager = ReimbursementDAO.getEmployeeById(manid);
+		Employee emp = ReimbursementDAO.getEmployeeById(this.eid);
+		if(b == false) {
+			this.status = "Denied";
+		} else {
+			if(manager.getDepartment() == 1) {
+				if(this.status.equals("Needs Supervisor, Head, and Benco Approval")) {
+					this.status = "Needs Supervisor and Head Approval";
+				} else if(this.status.equals("Needs Supervisor and Benco Approval")) {
+					this.status = "Needs Supervisor Approval";
+				} else if(this.status.equals("Needs Head and Benco Approval")) {
+					this.status = "Needs Head Approval";
+				} else if(this.status.equals("Needs Benco Approval")) {
+					this.status = "Approved";
+				}
+			}
+			ArrayList<Integer> departments = ReimbursementDAO.checkDepartmentHead(manid);
+			if(departments.contains(emp.getDepartment())) {
+				if(this.status.equals("Needs Supervisor, Head, and Benco Approval") ||
+						this.status.equals("Needs Supervisor and Benco Approval") || this.status.equals("Needs Head and Benco Approval")) {
+					this.status = "Needs Benco Approval";
+				} else if(this.status.equals("Needs Supervisor and Head Approval") ||
+					this.status.equals("Needs Head Approval") || this.status.equals("Needs Supervisor Approval")) {
+					this.status = "Approved";
+				}
+			} else if(emp.getManagerId() == manid) {
+				if(this.status.equals("Needs Supervisor, Head, and Benco Approval")) {
+					this.status = "Needs Head and Benco Approval";
+				} else if(this.status.equals("Needs Supervisor and Benco Approval")) {
+					this.status = "Needs Benco Approval";
+				}
+			}
+		}
+		ReimbursementDAO.updateStatus(this);
+	}
 	public int getId() {
 		return id;
 	}

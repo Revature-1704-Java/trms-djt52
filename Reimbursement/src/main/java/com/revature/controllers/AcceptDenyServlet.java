@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,19 +18,47 @@ import com.revature.Reimbursements.beans.Reimbursement;
 public class AcceptDenyServlet extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String change = request.getParameter("change");
-	    String ridStr = request.getParameter("rid");
-	    String eidStr = request.getParameter("eid");
-	    String denyReason = request.getParameter("deny");
-	    int rid = Integer.parseInt(ridStr);
-	    int eid = Integer.parseInt(eidStr);
-	    Reimbursement rem = ReimbursementDAO.getRequest(rid);
-	    if(change.equals("Approve")) {
-	    	
-	    } else if(change.equals("Deny")) {
-	    	rem.setStatus("Denied");
-	    	rem.setDenial("denyReason");
-	    	ReimbursementDAO.updateRequest(rem);
+		String apps = request.getParameter("apps");
+	    String deny = request.getParameter("deny");
+	    int eid = Integer.parseInt(request.getParameter("eid"));
+	    ArrayList<Integer> appnumbers = new ArrayList<Integer>();
+	    ArrayList<Integer> denynumbers = new ArrayList<Integer>();
+	    if(apps != null) {
+		    for(int i = 0;i < apps.length();i++) {
+		    	StringBuilder builder = new StringBuilder();
+		    	if(apps.charAt(i) == ',') {
+		    		appnumbers.add(Integer.parseInt(builder.toString()));
+		    	
+		    	}else {
+		    		builder.append(apps.charAt(i));
+		    	}
+		    	if( i + 1 == apps.length()) {
+		    		appnumbers.add(Integer.parseInt(builder.toString()));
+		    	}
+		    }
 	    }
+	    if(deny != null) {
+		    for(int i = 0;i < deny.length();i++) {
+		    	StringBuilder builder = new StringBuilder();
+		    	if(deny.charAt(i) == ',')  {
+		    		denynumbers.add(Integer.parseInt(builder.toString()));
+		    	} else {
+		    		builder.append(deny.charAt(i));
+		    	}
+		    	if(i + 1 == deny.length()) {
+		    		denynumbers.add(Integer.parseInt(builder.toString()));
+		    	}
+		    }
+	    }
+	    for(int a: appnumbers) {
+	    	Reimbursement rem = ReimbursementDAO.getRequest(a);
+	    	rem.updateStatus(eid,true);
+	    }
+	    for(int d: denynumbers) {
+	    	Reimbursement rem = ReimbursementDAO.getRequest(d);
+	    	rem.updateStatus(eid,false);
+	    }
+	    
+	    
 	}
 }

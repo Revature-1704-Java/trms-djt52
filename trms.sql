@@ -86,3 +86,14 @@ INSERT INTO EVENTTYPE VALUES (3, 'Certification Preparation Class', 75);
 INSERT INTO EVENTTYPE VALUES (4, 'Certification', 100);
 INSERT INTO EVENTTYPE VALUES (5, 'Technical Training', 90);
 INSERT INTO EVENTTYPE VALUES (6, 'Other', 30);
+INSERT INTO GRADEFORMAT VALUES (1, 'Graded', 'Grade');
+INSERT INTO GRADEFORMAT VALUES (2, 'Pass/Fail', 'Grade');
+INSERT INTO GRADEFORMAT VALUES (3, 'Completion', 'Presentation');
+INSERT INTO GRADEFORMAT VALUES (4, 'Participation', 'Presentation');
+Insert Into DEPARTMENT VALUES (1, 'Benco', 1);
+Commit;
+
+Delete From REQUEST WHERE EID = 0;
+
+Update EMPLOYEE Set EDEPARTMENT = 1 WHERE EID = 1;
+Commit;
