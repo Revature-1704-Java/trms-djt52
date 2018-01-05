@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.Reimbursements.DAO.ReimbursementDAO;
 import com.revature.Reimbursements.beans.Employee;
@@ -45,7 +47,7 @@ public class ManServlet extends HttpServlet{
 					}
 				}
 				if(check) {
-					System.out.println("repeated")
+					System.out.println("repeated");
 					list2.add(r);
 					
 				}
@@ -56,6 +58,7 @@ public class ManServlet extends HttpServlet{
 		rlist = list.toArray(rlist);
 		String res = mapper.writeValueAsString(rlist);
 		response.getWriter().append(res);		
+		
 				
 	}
 	

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.Reimbursements.DAO.ReimbursementDAO;
 import com.revature.Reimbursements.beans.Employee;
@@ -37,6 +39,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		Reimbursement rem = mapper.readValue(json, Reimbursement.class);
 		if(rem != null) {
 			rem.initialize();
+			Logger log = Logger.getRootLogger();
+			log.info("New Request: " + rem.getId());
 			response.getWriter().append(rem.getReason());
 		} else {
 			response.getWriter().append("Other problem");

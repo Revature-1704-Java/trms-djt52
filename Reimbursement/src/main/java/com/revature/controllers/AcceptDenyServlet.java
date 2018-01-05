@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.Reimbursements.DAO.ReimbursementDAO;
 import com.revature.Reimbursements.beans.Employee;
@@ -53,10 +55,16 @@ public class AcceptDenyServlet extends HttpServlet{
 	    for(int a: appnumbers) {
 	    	Reimbursement rem = ReimbursementDAO.getRequest(a);
 	    	rem.updateStatus(eid,true);
+	    	Logger log = Logger.getRootLogger();
+			log.info("Updated Request: " + rem.getId());
+			response.getWriter().append(rem.getReason());
 	    }
 	    for(int d: denynumbers) {
 	    	Reimbursement rem = ReimbursementDAO.getRequest(d);
 	    	rem.updateStatus(eid,false);
+	    	Logger log = Logger.getRootLogger();
+			log.info("Denied Request: " + rem.getId());
+			response.getWriter().append(rem.getReason());
 	    }
 	    
 	    
