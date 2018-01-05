@@ -17,6 +17,7 @@ import com.revature.Reimbursements.DAO.ReimbursementDAO;
 import com.revature.Reimbursements.beans.Employee;
 import com.revature.Reimbursements.beans.Reimbursement;
 
+//Servlet to display management view files
 public class ManServlet extends HttpServlet{
 
 		

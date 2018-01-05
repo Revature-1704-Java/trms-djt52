@@ -12,7 +12,7 @@ import com.revature.Reimbursements.DAO.ReimbursementDAO;
 import com.revature.Reimbursements.beans.Employee;
 
 
-//@WebServlet("/login")
+//Servlet for logging in
 public class LoginServlet extends HttpServlet{
 	
 	

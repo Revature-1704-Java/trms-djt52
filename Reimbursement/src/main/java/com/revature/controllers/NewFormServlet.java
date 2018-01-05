@@ -15,9 +15,10 @@ import com.revature.Reimbursements.DAO.ReimbursementDAO;
 import com.revature.Reimbursements.beans.Employee;
 import com.revature.Reimbursements.beans.Reimbursement;
 
+//A servlet to add new requests to the database
 public class NewFormServlet extends HttpServlet{
 	
-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
 		

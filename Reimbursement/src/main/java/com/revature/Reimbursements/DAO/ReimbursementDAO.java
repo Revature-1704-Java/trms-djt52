@@ -16,6 +16,7 @@ import com.revature.Reimbursements.util.ConnectionUtil;
 
 public class ReimbursementDAO {
 	
+	//Returns all of an employee's requests
 	public static List<Reimbursement> getEmployeeRequests(int eid) {
 		
 		PreparedStatement ps = null;
@@ -56,7 +57,8 @@ public class ReimbursementDAO {
 		return requests;
 	}
 	
-public static Reimbursement getRequest(int rid) {
+	//Returns a request by id for updating
+	public static Reimbursement getRequest(int rid) {
 		
 		PreparedStatement ps = null;
 		Reimbursement r = null;
@@ -94,7 +96,7 @@ public static Reimbursement getRequest(int rid) {
 		
 		return request;
 	}
-
+	//Gets an employee's info for logging in
 	public static Employee getEmployee(String email) {
 		PreparedStatement ps = null;
 		Employee e = null;
@@ -122,6 +124,7 @@ public static Reimbursement getRequest(int rid) {
 		return e;
 	}
 	
+	//Get's employee information to find management status
 	public static Employee getEmployeeById(int eid) {
 		PreparedStatement ps = null;
 		Employee e = null;
@@ -149,7 +152,7 @@ public static Reimbursement getRequest(int rid) {
 		return e;
 	}
 	
-	//Needs work
+	//Updates the status of a request
 	public static void updateStatus(Reimbursement r) {
 		PreparedStatement ps = null;
 		Employee e = null;
@@ -164,7 +167,7 @@ public static Reimbursement getRequest(int rid) {
 			ex.printStackTrace();
 		}
 	}
-	
+	//Submits a new request
 	public static void newRequest(Reimbursement r) {
 		CallableStatement cs = null;
 		try (Connection conn = ConnectionUtil.getConnection()) {
@@ -197,31 +200,7 @@ public static Reimbursement getRequest(int rid) {
 			ex.printStackTrace();
 		}
 	}
-	
-	public static void updateRequest(Reimbursement r) {
-		CallableStatement cs = null;
-		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "UPDATE REQUEST SET RAMOUNT = ?, STATUS = ?, EXCREASON = ?, DENIAL = ?"
-					+ "WHERE RID = ?";
-
-			cs = conn.prepareCall(sql);
-			cs.setFloat(1, r.getRamount());
-			cs.setString(2,r.getStatus());
-			cs.setString(3,r.getExcreason());
-			cs.setString(4,r.getDenial());
-			cs.setInt(5, r.getId());
-			Boolean result = cs.execute();
-			if (!result)
-				System.out.println("Request Updated");
-			else
-				System.out.println("Failed");
-			
-			cs.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-	
+	//Gets event id for display
 	public static int getEvent(int evId) {
 		PreparedStatement ps = null;
 		int percent = 0;
@@ -241,7 +220,7 @@ public static Reimbursement getRequest(int rid) {
 		}
 		return percent;
 	}
-	
+	//Sets the amount available left for reimbursements after a request
 	public static void setEmpAmount(int id,float amount) {
 		CallableStatement cs = null;
 		try (Connection conn = ConnectionUtil.getConnection()) {
@@ -257,6 +236,7 @@ public static Reimbursement getRequest(int rid) {
 			ex.printStackTrace();
 		}
 	}
+	//gets the amount an employee has left for reimbursements
 	public static float getEmpAmount(int eid) {
 		PreparedStatement ps = null;
 		float amount = 0;
@@ -276,7 +256,7 @@ public static Reimbursement getRequest(int rid) {
 		}
 		return amount;
 	}
-	
+	//Supplies an Event Id for request submission
 	public static int getEventId(String evname) {
 		PreparedStatement ps = null;
 		int id = 0;
@@ -296,7 +276,7 @@ public static Reimbursement getRequest(int rid) {
 		}
 		return id;
 	}
-	
+	//Supplies the format for a request submission
 	public static int getFormatId(String fname) {
 		PreparedStatement ps = null;
 		int id = 0;
@@ -342,9 +322,6 @@ public static Reimbursement getRequest(int rid) {
 	}
 	
 	// Returns all of the subordinate requests of a manager
-	//needs work
-	//
-	//
 	public static List<Reimbursement> getSubordinateRequests(int id) {
 		PreparedStatement ps = null;
 		List<Reimbursement> res = new ArrayList<>();
@@ -384,7 +361,7 @@ public static Reimbursement getRequest(int rid) {
 	}
 	
 	
-	
+	//Finds all the requests for a department for the department head
 	public static List<Reimbursement> getDepartmentEmployeeRequests(int i) {
 		PreparedStatement ps = null;
 		List<Reimbursement> res = new ArrayList<>();
@@ -422,6 +399,7 @@ public static Reimbursement getRequest(int rid) {
 		
 	}
 	
+	//returns all requests for the Banco display
 	public static List<Reimbursement> getAllRequests() {
 		PreparedStatement ps = null;
 		List<Reimbursement> res = new ArrayList<>();

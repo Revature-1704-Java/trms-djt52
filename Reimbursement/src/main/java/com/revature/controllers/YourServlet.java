@@ -14,6 +14,7 @@ import com.revature.Reimbursements.DAO.ReimbursementDAO;
 import com.revature.Reimbursements.beans.Employee;
 import com.revature.Reimbursements.beans.Reimbursement;
 
+//Servlet to display a user's own requests
 public class YourServlet extends HttpServlet{
 
 		

@@ -17,6 +17,7 @@ import com.revature.Reimbursements.DAO.ReimbursementDAO;
 import com.revature.Reimbursements.beans.Employee;
 import com.revature.Reimbursements.beans.Reimbursement;
 
+//Recieves Reimbursement Id's to Approve or Deny
 public class AcceptDenyServlet extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

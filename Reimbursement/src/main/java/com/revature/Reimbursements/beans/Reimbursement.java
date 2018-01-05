@@ -63,6 +63,8 @@ public class Reimbursement {
 		//this.timemissed = timemissed;
 		
 	}
+	
+	//Adds variables not in the form submission: Status, ramount
 	public void initialize() {
 		
 		int eventPercent = ReimbursementDAO.getEvent(eventid);
@@ -85,6 +87,7 @@ public class Reimbursement {
 		ReimbursementDAO.newRequest(this);
 		
 	}
+	//Updates a Request's status in the database after recieving the update from the front end
 	public void updateStatus(int manid,boolean b) {
 		Employee manager = ReimbursementDAO.getEmployeeById(manid);
 		Employee emp = ReimbursementDAO.getEmployeeById(this.eid);
